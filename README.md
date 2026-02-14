@@ -1,66 +1,94 @@
-MWD - Magic Working Directory :magic_wand: Vim 
-==============================================
+# startdir.vim :compass:
+### Start Vim where you intend.
 
-Change the startup behavior of Vim to follow your path.
+`startdir.vim` is a minimalist Vim plugin that sets Vim’s working directory based on the file or directory you pass at startup.
 
-![img](./assets/demo.gif)
+If you launch Vim with a path argument, `startdir` ensures Vim’s current working directory matches that location at startup and then stays out of the way.
 
-Rationale
----------
+No root detection.
+No ongoing directory tracking.
+No configuration required.
 
-Have you ever started Vim from the command line with a path argument
-and were surprised to discover that Vim was operating on a completely
-different path than what you expected? :confused:
+Just predictable startup behavior.
 
-Do you think it would be awesome if Vim's current working directory
-was derived from the path argument?
+---
 
-Well this could be the perfect plugin for you! :smiley:
+## Why?
 
-No more fussing with having to manually change the current working
-directory after startup. MWD is a simple plugin that handles this
-task for you automatically and requires zero-configuration.
+When you open Vim like this:
 
-Q & A
------
+```bash
+vim my_project/
+```
 
-Why not use Vim's built-in autochdir feature?
+or:
 
-It simply doesn't fit my workflow. I would like Vim to stay in my workspace
-path or what is also known as the project's root. Autochdir will keep changing
-your directory all over the place as you jump to different files throughout
-your workspace tree. For this reason, I recommend turning off autochdir when
-using this plugin.
+```bash
+vim my_project/src/app.py
+```
 
-Why not use the [vim-rooter](https://github.com/airblade/vim-rooter) plugin?
+Vim does not always change its working directory to `my_project/`.
 
-This looks like a great alternative! I simply didn't need any of the
-additional capabilities it offers. If you need something with more
-capabilities, please give vim-rooter a try!
+That can affect:
+
+- Relative `:e` commands
+- `:grep` searches
+- File explorers
+- Fuzzy finders
+- Any plugin that relies on `getcwd()`
+
+`startdir.vim` ensures Vim begins in the directory you meant to work in.
+
+---
+
+## What It Does
+
+At startup:
+
+- If you pass a directory → Vim’s working directory becomes that directory.
+- If you pass a file → Vim’s working directory becomes that file’s parent directory.
+- If you pass nothing → Nothing changes.
+
+After launch, `startdir` does nothing further.
+
+It does not:
+
+- Detect Git roots
+- Override `'autochdir'`
+- Follow you as you switch buffers
+- Manage projects or workspaces
+
+It simply aligns Vim’s working directory with your startup intent.
+
+---
 
 ## Installation
 
-### Using [vim-plug](https://github.com/junegunn/vim-plug)
+Using vim-plug:
 
 ```vim
-Plug 'k3vinw/mwd.vim'
+Plug 'k3vinw/startdir.vim'
 ```
 
-### Manual
+Works with any plugin manager.
 
-```
-copy autoload/mwd.vim  -> ~/.vim/autoload/mwd.vim
-copy plugin/mwd.vim -> ~/.vim/plugin/mwd.vim
-```
+---
 
-## Usage
+## Philosophy
 
-```bash
-vim ~/projects/magic # sets Vim's current working directory to ~/projects/magic
-vim ~/projects/magic/README.md # sets Vim's current working directory to ~/projects/magic
-vim # current working directory is not changed
-```
+Vim is powerful because it is predictable.
+
+`startdir.vim` does one small thing:
+
+> Make startup behavior match your expectations.
+
+Nothing more.
+
+---
 
 ## License
 
 MIT License. Copyright (c) 2023 Kevin Ray Wood.
+
+---
+
