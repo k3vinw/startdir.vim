@@ -88,7 +88,7 @@ Nothing more.
 
 ## License
 
-MIT License. Copyright (c) 2023 Kevin Ray Wood.
+MIT License.
 
 ---
 
